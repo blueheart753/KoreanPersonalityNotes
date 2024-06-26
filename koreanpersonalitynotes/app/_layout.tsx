@@ -1,37 +1,61 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Header from '@/components/navigation/Header';
+import SearchBar from '@/components/navigation/SearchBar';
+import Notes from '@/components/navigation/';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+export default function HomeScreen() {
+  const navigation = useNavigation();
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+  const handleAddNote = () => {
+    navigation.navigate('SelectMethod');
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <View style={styles.container}>
+      <View style={styles.containerBox}>
+        <Header />
+        <SearchBar />
+        <View style={styles.notesContainer}>
+          <Notes
+            personality={'긍정적인'}
+            notesStatus={true}
+            create_at="2024.06.26"
+          />
+        </View>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleAddNote}>
+        <Text style={styles.buttonText}>+</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  containerBox: {
+    width: '100%',
+    height: '90%',
+    display: 'flex',
+  },
+  container: {
+    width: '100%',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    backgroundColor: '#050513',
+    padding: 25,
+  },
+  notesContainer: {
+    width: '100%',
+    marginTop: 50,
+  },
+  button: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#141467', // 버튼 배경 색상
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: { color: '#fff', fontSize: 24 },
+});
