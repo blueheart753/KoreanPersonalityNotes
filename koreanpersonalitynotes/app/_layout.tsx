@@ -1,16 +1,25 @@
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import Header from '@/components/navigation/Header';
-import SearchBar from '@/components/navigation/SearchBar';
-import Notes from '@/components/navigation/';
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native'
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native'
+import Header from '@/components/navigation/Header'
+import SearchBar from '@/components/navigation/SearchBar'
+import Notes from '@/components/navigation/Notes'
 
 export default function HomeScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = ('0' + (date.getMonth() + 1)).slice(-2)
+  const day = ('0' + date.getDate()).slice(-2)
+  const today = `${year}.${month}.${day}`
 
   const handleAddNote = () => {
-    navigation.navigate('SelectMethod');
-  };
-
+    navigation.navigate('SelectMethod')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
@@ -20,7 +29,7 @@ export default function HomeScreen() {
           <Notes
             personality={'긍정적인'}
             notesStatus={true}
-            create_at="2024.06.26"
+            create_at={today}
           />
         </View>
       </View>
@@ -28,7 +37,7 @@ export default function HomeScreen() {
         <Text style={styles.buttonText}>+</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -58,4 +67,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: { color: '#fff', fontSize: 24 },
-});
+})
