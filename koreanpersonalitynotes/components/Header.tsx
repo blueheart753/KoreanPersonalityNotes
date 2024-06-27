@@ -1,23 +1,26 @@
-import { StyleSheet, Text, View, Switch } from 'react-native'
-import { useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Header = () => {
-  const [isEnabled, setIsEnabled] = useState(false)
-  const darkModeToggle = () => setIsEnabled(previousState => !previousState)
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const handleAddNote = () => {
+    navigation.navigate('SelectMethod');
+  };
+
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.title}>Notes</Text>
-      <Switch
-        trackColor={{ false: '#2e2e2e', true: '#81b0ff' }}
-        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={darkModeToggle}
-        value={isEnabled}
-        style={styles.darkModeToggle}
-      />
+      <TouchableOpacity onPress={handleAddNote}>
+        <Icon name="add-circle" color={'#fff'} size={40} />
+      </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -34,9 +37,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'semibold',
   },
-  darkModeToggle: {
-    marginTop: 4,
-  },
-})
+});
 
-export default Header
+export default Header;
