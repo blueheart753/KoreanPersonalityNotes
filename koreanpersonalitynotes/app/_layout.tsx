@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '@/components/navigation/HomeScreen';
 import SelectMethodScreen from '@/components/navigation/SelectMethod';
+import RandomNote from '@/components/navigation/RandomNote';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
       >
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="SelectMethod" component={SelectMethodScreen} />
+        <Stack.Screen name="RandomNote" component={RandomNote} />
       </Stack.Navigator>
     </NavigationContainer>
   );
