@@ -1,41 +1,48 @@
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
-import {
-  NavigationProp,
-  ParamListBase,
-  useNavigation,
-} from '@react-navigation/native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
-import Notes from '@/components/Notes';
+import NotesList from '@/components/NotesList';
 
 export default function HomeScreen() {
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
-
   const date = new Date();
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const day = ('0' + date.getDate()).slice(-2);
   const today = `${year}.${month}.${day}`;
 
-  const handleAddNote = () => {
-    navigation.navigate('SelectMethod');
-  };
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
         <Header />
         <SearchBar />
-        <View style={styles.notesContainer}>
-          <Notes
+        <ScrollView style={styles.notesContainer}>
+          <NotesList
             personality={'긍정적인'}
             notesStatus={true}
             create_at={today}
           />
-        </View>
+          <NotesList
+            personality={'긍정적인'}
+            notesStatus={false}
+            create_at={today}
+          />
+          <NotesList
+            personality={'긍정적인'}
+            notesStatus={true}
+            create_at={today}
+          />
+          <NotesList
+            personality={'긍정적인'}
+            notesStatus={true}
+            create_at={today}
+          />
+          <NotesList
+            personality={'긍정적인'}
+            notesStatus={false}
+            create_at={today}
+          />
+        </ScrollView>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleAddNote}>
-        <Text style={styles.buttonText}>+</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -43,7 +50,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   containerBox: {
     width: '100%',
-    height: '90%',
+    height: '100%',
     display: 'flex',
   },
   container: {
@@ -56,15 +63,6 @@ const styles = StyleSheet.create({
   },
   notesContainer: {
     width: '100%',
-    marginTop: 50,
+    marginTop: 10,
   },
-  button: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#141467', // 버튼 배경 색상
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonText: { color: '#fff', fontSize: 24 },
 });
