@@ -8,13 +8,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const AllNotesButton = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const handleAddNote = () => {
+  const handleBack = () => {
     navigation.navigate('Home');
   };
 
   return (
     <View style={styles.AllNotesButtonView}>
-      <TouchableOpacity style={styles.backButton} onPress={handleAddNote}>
+      <TouchableOpacity style={styles.backButton} onPress={handleBack}>
         <Icon
           name="chevron-back"
           size={20}
