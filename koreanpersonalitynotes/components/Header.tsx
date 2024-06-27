@@ -8,14 +8,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const Header = () => {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const handleAddNote = () => {
+  const handleSelectNote = () => {
     navigation.navigate('SelectMethod');
   };
 
   return (
     <View style={styles.headerContainer}>
       <Text style={styles.title}>Notes</Text>
-      <TouchableOpacity onPress={handleAddNote}>
+      <TouchableOpacity onPress={handleSelectNote}>
         <Icon name="add-circle" color={'#fff'} size={40} />
       </TouchableOpacity>
     </View>
