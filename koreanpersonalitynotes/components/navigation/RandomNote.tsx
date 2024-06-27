@@ -1,13 +1,17 @@
-import { StyleSheet, View, Text } from 'react-native';
-import AllNotesButton from '../AllNoteButton';
+import { StyleSheet, View, Text } from 'react-native'
+import AllNotesButton from '../AllNoteButton'
+import InsertNote from '../WriteNote'
 
 const RandomNote = () => {
   return (
     <View style={styles.RandomKeywordNoteWrap}>
       <AllNotesButton />
+      <View>
+        <InsertNote personality="긍정적인" />
+      </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   RandomKeywordNoteWrap: {
@@ -17,6 +21,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 35,
   },
-});
+})
 
-export default RandomNote;
+export default RandomNote
