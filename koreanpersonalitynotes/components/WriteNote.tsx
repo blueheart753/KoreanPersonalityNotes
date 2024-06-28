@@ -1,16 +1,29 @@
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
-import WriteDescription from './WriteDescription'
-import SaveButton from './SaveButton'
+import { StyleSheet, View, TextInput } from 'react-native';
+import WriteDescription from './WriteDescription';
+import SaveButton from './SaveButton';
 
 interface Props {
-  personality: string
+  personality: string;
+  isRandom: boolean;
 }
 
-const InsertNote = ({ personality }: Props) => {
+const WriteNote = ({ personality, isRandom }: Props) => {
   return (
     <View>
       <View style={styles.personalityContainer}>
-        <Text style={styles.personality}>{personality}</Text>
+        {isRandom ? (
+          <TextInput style={styles.personality} readOnly>
+            {personality}
+          </TextInput>
+        ) : (
+          <TextInput
+            style={styles.personality}
+            placeholder="키워드를 입력해주세요"
+            placeholderTextColor={'#fff'}
+          >
+            {personality}
+          </TextInput>
+        )}
         <View style={styles.personalityBorderBottom} />
       </View>
       <View>
@@ -20,8 +33,8 @@ const InsertNote = ({ personality }: Props) => {
         <SaveButton />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   personalityContainer: {
@@ -39,6 +52,6 @@ const styles = StyleSheet.create({
     borderBlockColor: '#2D2D2D',
     paddingTop: 10,
   },
-})
+});
 
-export default InsertNote
+export default WriteNote;
