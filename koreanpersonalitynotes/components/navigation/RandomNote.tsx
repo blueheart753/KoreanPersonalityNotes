@@ -1,21 +1,21 @@
-import { StyleSheet, View, Text } from 'react-native';
-import AllNotesButton from '../AllNoteButton';
-import WriteNote from '../WriteNote';
-import { useEffect, useState } from 'react';
-import RandomKoreanPersonality from '@/api/KoreanPersonalityAPI';
+import { StyleSheet, View, Text } from 'react-native'
+import AllNotesButton from '../HomeButton'
+import WriteNote from '../WriteNote'
+import { useEffect, useState } from 'react'
+import RandomKoreanPersonality from '@/api/KoreanPersonalityAPI'
 
 const RandomNote = () => {
-  const [personality, setPersonality] = useState<string>('');
+  const [personality, setPersonality] = useState<string>('')
 
   useEffect(() => {
     const fatchData = async () => {
-      const data = await RandomKoreanPersonality();
+      const data = await RandomKoreanPersonality()
       if (data) {
-        setPersonality(data);
+        setPersonality(data)
       }
-    };
-    fatchData();
-  }, []);
+    }
+    fatchData()
+  }, [])
   return (
     <View style={styles.RandomKeywordNoteWrap}>
       <AllNotesButton />
@@ -23,8 +23,8 @@ const RandomNote = () => {
         <WriteNote personality={personality} isRandom={true} />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   RandomKeywordNoteWrap: {
@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 35,
   },
-});
+})
 
-export default RandomNote;
+export default RandomNote

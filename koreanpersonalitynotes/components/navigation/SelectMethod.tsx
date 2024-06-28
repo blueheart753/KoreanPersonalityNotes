@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text } from 'react-native';
-import AllNotesButton from '../AllNoteButton';
-import Choise from '../Choise';
+import { StyleSheet, View, Text } from 'react-native'
+import AllNotesButton from '../HomeButton'
+import Choise from '../Choise'
 const SelectMethod = () => {
   return (
     <View style={styles.SelectMethodContainer}>
@@ -23,8 +23,8 @@ const SelectMethod = () => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   SelectMethodContainer: {
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 24,
   },
-});
+})
 
-export default SelectMethod;
+export default SelectMethod

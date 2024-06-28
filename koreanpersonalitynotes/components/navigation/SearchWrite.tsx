@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import AllNotesButton from '../AllNoteButton';
-import WriteNote from '../WriteNote';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import AllNotesButton from '../HomeButton'
+import WriteNote from '../WriteNote'
 
 const SearchWrite = () => {
-  const [personality, setPersonality] = useState<string>('');
+  const [personality, setPersonality] = useState<string>('')
 
   return (
     <View style={styles.SearchKeywordNoteWrap}>
@@ -13,8 +13,8 @@ const SearchWrite = () => {
         <WriteNote personality={''} isRandom={false} />
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   SearchKeywordNoteWrap: {
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 35,
   },
-});
+})
 
-export default SearchWrite;
+export default SearchWrite
