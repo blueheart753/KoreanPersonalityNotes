@@ -23,7 +23,7 @@ const Choise = ({
     navigation.navigate('RandomNote');
   };
   const handleSearchNote = () => {
-    navigation.navigate('Home');
+    navigation.navigate('SearchNote');
   };
   return (
     <TouchableOpacity
