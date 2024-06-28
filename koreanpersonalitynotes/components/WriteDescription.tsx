@@ -1,4 +1,5 @@
-import { StyleSheet, View, TextInput } from 'react-native'
+import { StyleSheet, View, TextInput } from 'react-native';
+import { useState } from 'react';
 
 const WriteDescription = () => {
   return (
@@ -9,8 +10,8 @@ const WriteDescription = () => {
         placeholderTextColor={'White'}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   WriteDescriptionContainer: {
@@ -22,6 +23,6 @@ const styles = StyleSheet.create({
   descriptionInput: {
     color: '#fff',
   },
-})
+});
 
-export default WriteDescription
+export default WriteDescription;
