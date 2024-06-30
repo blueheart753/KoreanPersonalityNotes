@@ -1,9 +1,19 @@
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface Props {
-  personality: string;
-  notesStatus: boolean;
-  create_at: string;
+  personality: string
+  notesStatus: boolean
+  create_at: string
+}
+
+const log = async () => {
+  try {
+    const result = await AsyncStorage.getItem('personality')
+    console.log(result)
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
@@ -14,6 +24,7 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
+      onPress={log}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
@@ -32,8 +43,8 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
         />
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -84,6 +95,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 4,
   },
-});
+})
 
-export default NotesList;
+export default NotesList
