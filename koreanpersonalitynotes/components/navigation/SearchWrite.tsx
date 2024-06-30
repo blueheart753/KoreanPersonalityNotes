@@ -2,15 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import AllNotesButton from '../HomeButton'
 import WriteNote from '../WriteNote'
+import SaveButton from '../SaveButton'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SearchWrite = () => {
   const [personality, setPersonality] = useState<string>('')
+
+  const handleSaveNote = (personality: string, description: string) => {
+    setPersonality(personality)
+  }
 
   return (
     <View style={styles.SearchKeywordNoteWrap}>
       <AllNotesButton />
       <View>
-        <WriteNote personality={''} isRandom={false} />
+        <WriteNote
+          personality={personality}
+          isRandom={false}
+          onSaveNote={handleSaveNote}
+        />
       </View>
     </View>
   )
