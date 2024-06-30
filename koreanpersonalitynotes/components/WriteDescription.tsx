@@ -1,6 +1,17 @@
+import { useState } from 'react'
 import { StyleSheet, View, TextInput } from 'react-native'
 
-const WriteDescription = () => {
+interface Props {
+  handleDescription: (description: string) => void
+}
+
+const WriteDescription = ({ handleDescription }: Props) => {
+  const [description, setDescription] = useState<string>('')
+
+  const handleInputChange = (text: string) => {
+    setDescription(text)
+    handleDescription(text)
+  }
   return (
     <View style={styles.WriteDescriptionContainer}>
       <TextInput
@@ -8,6 +19,7 @@ const WriteDescription = () => {
         placeholder="키워드에 맞게 자신의 이야기를 적어주세요!"
         placeholderTextColor={'#AAA'}
         textAlignVertical="top"
+        onChangeText={handleInputChange}
       />
     </View>
   )
