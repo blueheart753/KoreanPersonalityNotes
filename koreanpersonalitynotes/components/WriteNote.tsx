@@ -1,24 +1,31 @@
 import { StyleSheet, View, TextInput, Text } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import WriteDescription from './WriteDescription'
+import SaveButton from './SaveButton'
 
 interface Props {
   personality: string
   isRandom: boolean
-  onSaveNote: (personality: string, description: string) => void
 }
 
-const WriteNote = ({ personality, isRandom, onSaveNote }: Props) => {
+const WriteNote = ({ personality, isRandom }: Props) => {
   const [personalityName, setPersonalityName] = useState<string>(personality)
   const [descriptionInfo, setDescriptionInfo] = useState<string>('')
+  const [createAt, setCreateAt] = useState<string>('')
+
+  const handleDescription = (description: string) => {
+    setDescriptionInfo(description)
+  }
+
   const date = new Date()
   const year = date.getFullYear()
   const month = ('0' + (date.getMonth() + 1)).slice(-2)
   const day = ('0' + date.getDate()).slice(-2)
   const today = `${year}.${month}.${day}`
 
-  const handleSave = () => {
-    onSaveNote(personality, descriptionInfo)
-  }
+  useEffect(() => {
+    setCreateAt(today)
+  }, [today])
 
   return (
     <View>
@@ -37,7 +44,6 @@ const WriteNote = ({ personality, isRandom, onSaveNote }: Props) => {
               placeholderTextColor={'#AAA'}
               autoFocus={true}
               value={personalityName}
-              onChangeText={setPersonalityName}
             />
           )}
           <Text style={styles.today}>{today}</Text>
@@ -45,17 +51,14 @@ const WriteNote = ({ personality, isRandom, onSaveNote }: Props) => {
         <View style={styles.personalityBorderBottom} />
       </View>
       <View>
-        <View style={styles.WriteDescriptionContainer}>
-          <TextInput
-            style={styles.descriptionInput}
-            placeholder="키워드에 맞게 자신의 이야기를 적어주세요!"
-            placeholderTextColor={'#AAA'}
-            textAlignVertical="top"
-            onChangeText={description => {
-              setDescriptionInfo(description)
-            }}
-          />
-        </View>
+        <WriteDescription handleDescription={handleDescription} />
+      </View>
+      <View>
+        <SaveButton
+          createAtInfo={createAt}
+          personalityInfo={personality}
+          descriptionInfo={descriptionInfo}
+        />
       </View>
     </View>
   )
@@ -86,16 +89,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderBlockColor: '#2D2D2D',
     paddingTop: 10,
-  },
-  WriteDescriptionContainer: {
-    marginTop: 20,
-    height: 550,
-    borderBottomWidth: 1,
-    borderBlockColor: '#2D2D2D',
-  },
-  descriptionInput: {
-    height: '100%',
-    color: '#fff',
   },
 })
 

@@ -1,26 +1,27 @@
 import { StyleSheet, View, Text } from 'react-native'
+import { useEffect, useState } from 'react'
 import AllNotesButton from '../HomeButton'
 import WriteNote from '../WriteNote'
-import { useEffect, useState } from 'react'
 import RandomKoreanPersonality from '@/api/KoreanPersonalityAPI'
 
 const RandomNote = () => {
-  const [personality, setPersonality] = useState<string>('')
+  const [randomPersonality, setRandomPersonality] = useState<string>('')
 
   useEffect(() => {
     const fatchData = async () => {
       const data = await RandomKoreanPersonality()
       if (data) {
-        setPersonality(data)
+        setRandomPersonality(data)
       }
     }
     fatchData()
   }, [])
+
   return (
     <View style={styles.RandomKeywordNoteWrap}>
       <AllNotesButton />
       <View>
-        <WriteNote personality={personality} isRandom={true} />
+        <WriteNote personality={randomPersonality} isRandom={true} />
       </View>
     </View>
   )
