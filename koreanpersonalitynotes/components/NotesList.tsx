@@ -1,30 +1,36 @@
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props {
-  personality: string
-  notesStatus: boolean
-  create_at: string
+  personality: string;
+  notesStatus: boolean; // 'true' for completed, 'false' for in-progress
+  create_at: string;
 }
 
 const log = async () => {
   try {
-    const result = await AsyncStorage.getItem('personality')
-    console.log(result)
+    const keys = await AsyncStorage.getAllKeys();
+    const result = await AsyncStorage.multiGet(keys);
+    result.forEach(([key, value]) => {
+      console.log(`${value} \n`);
+    });
   } catch (error) {
-    console.error(error)
+    console.error('Error retrieving data from AsyncStorage:', error);
   }
-}
+  // AsyncStorage.clear();
+};
 
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
+  const isCompleted = notesStatus;
+
   return (
     <TouchableOpacity
       style={
-        notesStatus
+        isCompleted
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
-      onPress={log}
+      onPress={async () => await log()}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
@@ -32,19 +38,20 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
       </View>
       <View style={styles.NoteBox}>
         <Text style={styles.NotesStatus}>
-          {notesStatus ? '작성완료' : '작성중...'}
+          {isCompleted ? '작성완료' : '작성중...'}
         </Text>
         <Image
+          style={styles.NoteImage}
           source={
-            notesStatus
+            isCompleted
               ? require('@/assets/images/completeImage.png')
               : require('@/assets/images/WritingImage.png')
           }
         />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -94,7 +101,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     gap: 4,
+    alignItems: 'center',
   },
-})
+  NoteImage: {
+    width: 24,
+    height: 24,
+  },
+});
 
-export default NotesList
+export default NotesList;
