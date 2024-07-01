@@ -10,37 +10,28 @@ export default function HomeScreen() {
   const day = ('0' + date.getDate()).slice(-2);
   const today = `${year}.${month}.${day}`;
 
+  const notesData = [
+    { personality: '긍정적인', notesStatus: true, create_at: today },
+    { personality: '긍정적인', notesStatus: false, create_at: today },
+    { personality: '긍정적인', notesStatus: true, create_at: today },
+    { personality: '긍정적인', notesStatus: true, create_at: today },
+    { personality: '긍정적인', notesStatus: false, create_at: today },
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
         <Header />
         <SearchBar />
         <ScrollView style={styles.notesContainer}>
-          <NotesList
-            personality={'긍정적인'}
-            notesStatus={true}
-            create_at={today}
-          />
-          <NotesList
-            personality={'긍정적인'}
-            notesStatus={false}
-            create_at={today}
-          />
-          <NotesList
-            personality={'긍정적인'}
-            notesStatus={true}
-            create_at={today}
-          />
-          <NotesList
-            personality={'긍정적인'}
-            notesStatus={true}
-            create_at={today}
-          />
-          <NotesList
-            personality={'긍정적인'}
-            notesStatus={false}
-            create_at={today}
-          />
+          {notesData.map((note, index) => (
+            <NotesList
+              key={index}
+              personality={note.personality}
+              notesStatus={note.notesStatus}
+              create_at={note.create_at}
+            />
+          ))}
         </ScrollView>
       </View>
     </View>
@@ -49,12 +40,10 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   containerBox: {
+    flex: 1,
     width: '100%',
-    height: '100%',
-    display: 'flex',
   },
   container: {
-    width: '100%',
     flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-end',
