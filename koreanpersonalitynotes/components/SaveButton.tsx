@@ -58,7 +58,7 @@ const SaveButton = ({
       createAtInfo,
       saveOrDrafts,
     );
-    // navigation.navigate('Home')
+    navigation.navigate('Home');
   };
 
   return (
