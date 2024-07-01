@@ -1,20 +1,18 @@
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 
 interface Props {
-  personality: string
-  notesStatus: boolean // 'true' for completed, 'false' for in-progress
-  create_at: string
+  personality: string;
+  notesStatus: string; // 'true' for completed, 'false' for in-progress
+  create_at: string;
 }
 
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
-  const isCompleted = notesStatus
+  const isCompleted = notesStatus;
 
   return (
     <TouchableOpacity
       style={
-        isCompleted
+        isCompleted == 'true'
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
@@ -25,20 +23,20 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
       </View>
       <View style={styles.NoteBox}>
         <Text style={styles.NotesStatus}>
-          {isCompleted ? '작성완료' : '작성중...'}
+          {isCompleted == 'true' ? '작성완료' : '작성중...'}
         </Text>
         <Image
           style={styles.NoteImage}
           source={
-            isCompleted
+            isCompleted == 'true'
               ? require('@/assets/images/completeImage.png')
               : require('@/assets/images/WritingImage.png')
           }
         />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -94,6 +92,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-})
+});
 
-export default NotesList
+export default NotesList;
