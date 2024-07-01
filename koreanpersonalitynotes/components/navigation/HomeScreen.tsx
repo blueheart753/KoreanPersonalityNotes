@@ -1,37 +1,61 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
-import Header from '@/components/Header'
-import SearchBar from '@/components/SearchBar'
-import NotesList from '@/components/NotesList'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState } from 'react'
+import { View, StyleSheet, ScrollView } from 'react-native';
+import Header from '@/components/Header';
+import SearchBar from '@/components/SearchBar';
+import NotesList from '@/components/NotesList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
+
+interface Item {
+  personality: string;
+  description: string;
+  createAt: string;
+  saveOrDrafts: string;
+}
 
 export default function HomeScreen() {
-  const [item, setItem] = useState<string>('')
+  const [items, setItems] = useState<Item[]>([]);
 
-  const getItem = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys()
-      const result = await AsyncStorage.multiGet(keys)
-      result.forEach(([key, value]) => {
-        if (value) {
-          setItem(JSON.parse(value))
-        }
-      })
-    } catch (error) {
-      console.error('Error retrieving data from AsyncStorage:', error)
-    }
-    // AsyncStorage.clear();
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const keys = await AsyncStorage.getAllKeys();
+        const result = await AsyncStorage.multiGet(keys);
+        const parsedItems = result
+          .map(([key, value]) => {
+            if (value) {
+              return JSON.parse(value) as Item;
+            }
+            return null;
+          })
+          .filter(item => item !== null) as Item[];
+        setItems(parsedItems);
+      } catch (error) {
+        console.error('Error retrieving data from AsyncStorage:', error);
+      }
+      // AsyncStorage.clear();
+    };
+
+    fetchData();
+  });
 
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
         <Header />
         <SearchBar />
-        <ScrollView style={styles.notesContainer}>{item[0][1]}</ScrollView>
+        <ScrollView style={styles.notesContainer}>
+          {items.map((item, index) => (
+            <NotesList
+              key={index}
+              personality={item.personality}
+              create_at={item.createAt}
+              notesStatus={item.saveOrDrafts}
+            />
+          ))}
+        </ScrollView>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -50,4 +74,4 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-})
+});
