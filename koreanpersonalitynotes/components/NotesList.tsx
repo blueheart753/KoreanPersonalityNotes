@@ -9,22 +9,6 @@ interface Props {
 }
 
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
-  const [item, setItem] = useState<string>('')
-  const getItem = async () => {
-    try {
-      const keys = await AsyncStorage.getAllKeys()
-      const result = await AsyncStorage.multiGet(keys)
-      result.forEach(([key, value]) => {
-        if (value) {
-          setItem(JSON.parse(value))
-        }
-      })
-    } catch (error) {
-      console.error('Error retrieving data from AsyncStorage:', error)
-    }
-    // AsyncStorage.clear();
-  }
-
   const isCompleted = notesStatus
 
   return (
@@ -34,7 +18,6 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
-      onPress={async () => await getItem()}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>

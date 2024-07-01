@@ -1,41 +1,37 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
-import Header from '@/components/Header';
-import SearchBar from '@/components/SearchBar';
-import NotesList from '@/components/NotesList';
+import { View, StyleSheet, ScrollView } from 'react-native'
+import Header from '@/components/Header'
+import SearchBar from '@/components/SearchBar'
+import NotesList from '@/components/NotesList'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useState } from 'react'
 
 export default function HomeScreen() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2);
-  const day = ('0' + date.getDate()).slice(-2);
-  const today = `${year}.${month}.${day}`;
+  const [item, setItem] = useState<string>('')
 
-  const notesData = [
-    { personality: '긍정적인', notesStatus: true, create_at: today },
-    { personality: '긍정적인', notesStatus: false, create_at: today },
-    { personality: '긍정적인', notesStatus: true, create_at: today },
-    { personality: '긍정적인', notesStatus: true, create_at: today },
-    { personality: '긍정적인', notesStatus: false, create_at: today },
-  ];
+  const getItem = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys()
+      const result = await AsyncStorage.multiGet(keys)
+      result.forEach(([key, value]) => {
+        if (value) {
+          setItem(JSON.parse(value))
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving data from AsyncStorage:', error)
+    }
+    // AsyncStorage.clear();
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.containerBox}>
         <Header />
         <SearchBar />
-        <ScrollView style={styles.notesContainer}>
-          {notesData.map((note, index) => (
-            <NotesList
-              key={index}
-              personality={note.personality}
-              notesStatus={note.notesStatus}
-              create_at={note.create_at}
-            />
-          ))}
-        </ScrollView>
+        <ScrollView style={styles.notesContainer}>{item[0][1]}</ScrollView>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -54,4 +50,4 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-});
+})
