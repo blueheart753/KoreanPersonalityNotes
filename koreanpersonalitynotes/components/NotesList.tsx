@@ -1,27 +1,31 @@
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useState } from 'react'
 
 interface Props {
-  personality: string;
-  notesStatus: boolean; // 'true' for completed, 'false' for in-progress
-  create_at: string;
+  personality: string
+  notesStatus: boolean // 'true' for completed, 'false' for in-progress
+  create_at: string
 }
 
-const log = async () => {
-  try {
-    const keys = await AsyncStorage.getAllKeys();
-    const result = await AsyncStorage.multiGet(keys);
-    result.forEach(([key, value]) => {
-      console.log(`${value} \n`);
-    });
-  } catch (error) {
-    console.error('Error retrieving data from AsyncStorage:', error);
-  }
-  // AsyncStorage.clear();
-};
-
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
-  const isCompleted = notesStatus;
+  const [item, setItem] = useState<string>('')
+  const getItem = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys()
+      const result = await AsyncStorage.multiGet(keys)
+      result.forEach(([key, value]) => {
+        if (value) {
+          setItem(JSON.parse(value))
+        }
+      })
+    } catch (error) {
+      console.error('Error retrieving data from AsyncStorage:', error)
+    }
+    // AsyncStorage.clear();
+  }
+
+  const isCompleted = notesStatus
 
   return (
     <TouchableOpacity
@@ -30,7 +34,7 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
-      onPress={async () => await log()}
+      onPress={async () => await getItem()}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
@@ -50,8 +54,8 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
         />
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -107,6 +111,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-});
+})
 
-export default NotesList;
+export default NotesList
