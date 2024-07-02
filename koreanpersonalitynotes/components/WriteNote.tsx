@@ -1,31 +1,32 @@
-import { StyleSheet, View, TextInput, Text } from 'react-native'
-import { useEffect, useState } from 'react'
-import WriteDescription from './WriteDescription'
-import SaveButton from './SaveButton'
+import { StyleSheet, View, TextInput, Text } from 'react-native';
+import { useEffect, useState } from 'react';
+import WriteDescription from './WriteDescription';
+import SaveButton from './SaveButton';
 
 interface Props {
-  personality: string
-  isRandom: boolean
+  personality: string;
+  isRandom: boolean;
 }
 
 const WriteNote = ({ personality, isRandom }: Props) => {
-  const [personalityName, setPersonalityName] = useState<string>(personality)
-  const [descriptionInfo, setDescriptionInfo] = useState<string>('')
-  const [createAt, setCreateAt] = useState<string>('')
+  const [personalityName, setPersonalityName] = useState<string>(personality);
+  const [writePersonalityName, setWritePersonalityName] = useState<string>('');
+  const [descriptionInfo, setDescriptionInfo] = useState<string>('');
+  const [createAt, setCreateAt] = useState<string>('');
 
   const handleDescription = (description: string) => {
-    setDescriptionInfo(description)
-  }
+    setDescriptionInfo(description);
+  };
 
-  const date = new Date()
-  const year = date.getFullYear()
-  const month = ('0' + (date.getMonth() + 1)).slice(-2)
-  const day = ('0' + date.getDate()).slice(-2)
-  const today = `${year}.${month}.${day}`
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = ('0' + (date.getMonth() + 1)).slice(-2);
+  const day = ('0' + date.getDate()).slice(-2);
+  const today = `${year}.${month}.${day}`;
 
   useEffect(() => {
-    setCreateAt(today)
-  }, [today])
+    setCreateAt(today);
+  }, [today]);
 
   return (
     <View>
@@ -43,7 +44,8 @@ const WriteNote = ({ personality, isRandom }: Props) => {
               placeholder="키워드를 입력해주세요"
               placeholderTextColor={'#AAA'}
               autoFocus={true}
-              value={personalityName}
+              value={writePersonalityName}
+              onChangeText={text => setWritePersonalityName(text)}
             />
           )}
           <Text style={styles.today}>{today}</Text>
@@ -56,13 +58,13 @@ const WriteNote = ({ personality, isRandom }: Props) => {
       <View>
         <SaveButton
           createAtInfo={createAt}
-          personalityInfo={personality}
+          personalityInfo={isRandom ? personality : writePersonalityName}
           descriptionInfo={descriptionInfo}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   personalityContainer: {
@@ -90,6 +92,6 @@ const styles = StyleSheet.create({
     borderBlockColor: '#2D2D2D',
     paddingTop: 10,
   },
-})
+});
 
-export default WriteNote
+export default WriteNote;
