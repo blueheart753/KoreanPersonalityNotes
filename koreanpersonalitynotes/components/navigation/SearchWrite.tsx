@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AllNotesButton from '../HomeButton';
 import WriteNote from '../WriteNote';
