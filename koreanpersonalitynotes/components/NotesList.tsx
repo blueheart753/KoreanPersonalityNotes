@@ -1,5 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from '@react-navigation/native';
 
 interface Props {
   personality: string;
@@ -9,6 +14,7 @@ interface Props {
 
 const NotesList = ({ create_at, notesStatus, personality }: Props) => {
   const isCompleted = notesStatus;
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   return (
     <TouchableOpacity
@@ -17,7 +23,7 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
-      onPress={() => AsyncStorage.clear()}
+      onPress={() => navigation.navigate('LearnMoreView')}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
