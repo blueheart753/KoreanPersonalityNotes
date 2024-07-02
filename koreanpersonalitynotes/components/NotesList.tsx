@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 
 interface Props {
   personality: string;
-  notesStatus: string; // 'true' for completed, 'false' for in-progress
+  notesStatus: string;
   create_at: string;
 }
 
@@ -91,8 +91,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   NoteImage: {
-    width: 24,
-    height: 24,
+    width: 14,
+    height: 14,
   },
 });
 
