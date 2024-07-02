@@ -1,25 +1,46 @@
-import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native'
+import AllNotesButton from '../HomeButton'
 
 const LearnMoreView = () => {
   return (
-    <SafeAreaView style={styles.learnMoreViewContainer}>
-      <View style={styles.learnMoreViewContainer}>
-        <Text style={styles.text}>LearnMoreView</Text>
+    <View style={styles.learnMoreViewContainer}>
+      <AllNotesButton />
+      <View style={styles.titleWrap}>
+        <Text style={styles.title}>personality</Text>
+        <Text style={styles.createAt}>createAt</Text>
       </View>
-    </SafeAreaView>
-  );
-};
+      <View>
+        <Text style={styles.description}>description</Text>
+      </View>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   learnMoreViewContainer: {
     height: '100%',
     backgroundColor: '#050513',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
+    paddingVertical: 45,
   },
-  text: {
+  titleWrap: {
+    paddingVertical: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
+  title: {
+    color: '#fff',
+    fontSize: 24,
+  },
+  createAt: {
+    color: '#fff',
+    fontSize: 12,
+  },
+  description: {
     color: '#fff',
   },
-});
+})
 
-export default LearnMoreView;
+export default LearnMoreView
