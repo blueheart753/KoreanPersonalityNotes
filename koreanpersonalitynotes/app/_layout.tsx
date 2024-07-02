@@ -5,6 +5,7 @@ import HomeScreen from '@/components/navigation/HomeScreen';
 import SelectMethodScreen from '@/components/navigation/SelectMethod';
 import RandomNote from '@/components/navigation/RandomNote';
 import SearchWrite from '@/components/navigation/SearchWrite';
+import LearnMoreView from '@/components/navigation/LearnMoreView';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="SelectMethod" component={SelectMethodScreen} />
         <Stack.Screen name="RandomNote" component={RandomNote} />
         <Stack.Screen name="SearchNote" component={SearchWrite} />
+        <Stack.Screen name="LearnMoreView" component={LearnMoreView} />
       </Stack.Navigator>
     </NavigationContainer>
   );
