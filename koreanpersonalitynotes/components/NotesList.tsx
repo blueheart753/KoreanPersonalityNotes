@@ -1,20 +1,35 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
-} from '@react-navigation/native';
+} from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 interface Props {
-  personality: string;
-  notesStatus: string;
-  create_at: string;
+  personality: string
+  notesStatus: string
+  description: string
+  create_at: string
 }
 
-const NotesList = ({ create_at, notesStatus, personality }: Props) => {
-  const isCompleted = notesStatus;
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+const NotesList = ({
+  create_at,
+  notesStatus,
+  personality,
+  description,
+}: Props) => {
+  const isCompleted = notesStatus
+  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+
+  const SendData = () => {
+    navigation.navigate('LearnMoreView', {
+      personality,
+      description,
+      create_at,
+    })
+    // AsyncStorage.clear()
+  }
 
   return (
     <TouchableOpacity
@@ -23,7 +38,7 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
-      onPress={() => navigation.navigate('LearnMoreView')}
+      onPress={SendData}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
@@ -43,8 +58,8 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
         />
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -100,6 +115,6 @@ const styles = StyleSheet.create({
     width: 14,
     height: 14,
   },
-});
+})
 
-export default NotesList;
+export default NotesList
