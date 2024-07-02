@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 
 interface Props {
@@ -16,6 +17,7 @@ const NotesList = ({ create_at, notesStatus, personality }: Props) => {
           ? styles.CompleteNoteListContainer
           : styles.NotCompleteNoteListContainer
       }
+      onPress={() => AsyncStorage.clear()}
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
