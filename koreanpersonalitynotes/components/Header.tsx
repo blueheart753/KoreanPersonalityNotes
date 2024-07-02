@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'space-between',
-    marginTop: 40,
+    marginTop: 10,
   },
   title: {
     color: '#fff',
