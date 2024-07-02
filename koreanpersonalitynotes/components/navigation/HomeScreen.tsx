@@ -1,4 +1,4 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
 import NotesList from '@/components/NotesList';
@@ -32,29 +32,30 @@ export default function HomeScreen() {
       } catch (error) {
         console.error('Error retrieving data from AsyncStorage:', error);
       }
-      // AsyncStorage.clear();
     };
 
     fetchData();
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.containerBox}>
-        <Header />
-        <SearchBar />
-        <ScrollView style={styles.notesContainer}>
-          {items.map((item, index) => (
-            <NotesList
-              key={index}
-              personality={item.personality}
-              create_at={item.createAt}
-              notesStatus={item.saveOrDrafts}
-            />
-          ))}
-        </ScrollView>
+        <View>
+          <Header />
+          <SearchBar />
+          <ScrollView style={styles.notesContainer}>
+            {items.map((item, index) => (
+              <NotesList
+                key={index}
+                personality={item.personality}
+                create_at={item.createAt}
+                notesStatus={item.saveOrDrafts}
+              />
+            ))}
+          </ScrollView>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -62,13 +63,13 @@ const styles = StyleSheet.create({
   containerBox: {
     flex: 1,
     width: '100%',
+    paddingHorizontal: 25,
   },
   container: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'flex-end',
     backgroundColor: '#050513',
-    padding: 25,
   },
   notesContainer: {
     width: '100%',
