@@ -1,41 +1,41 @@
-import { View, StyleSheet, ScrollView } from 'react-native'
-import Header from '@/components/Header'
-import SearchBar from '@/components/SearchBar'
-import NotesList from '@/components/NotesList'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState, useEffect } from 'react'
+import { View, StyleSheet, ScrollView } from 'react-native';
+import Header from '@/components/Header';
+import SearchBar from '@/components/SearchBar';
+import NotesList from '@/components/NotesList';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
 
 interface Item {
-  personality: string
-  description: string
-  createAt: string
-  saveOrDrafts: string
+  personality: string;
+  description: string;
+  createAt: string;
+  saveOrDrafts: string;
 }
 
 export default function HomeScreen() {
-  const [items, setItems] = useState<Item[]>([])
+  const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const keys = await AsyncStorage.getAllKeys()
-        const result = await AsyncStorage.multiGet(keys)
+        const keys = await AsyncStorage.getAllKeys();
+        const result = await AsyncStorage.multiGet(keys);
         const parsedItems = result
           .map(([key, value]) => {
             if (value) {
-              return JSON.parse(value) as Item
+              return JSON.parse(value) as Item;
             }
-            return null
+            return null;
           })
-          .filter(item => item !== null) as Item[]
-        setItems(parsedItems)
+          .filter(item => item !== null) as Item[];
+        setItems(parsedItems);
       } catch (error) {
-        console.error('Error retrieving data from AsyncStorage:', error)
+        console.error('Error retrieving data from AsyncStorage:', error);
       }
-    }
+    };
 
-    fetchData()
-  })
+    fetchData();
+  });
 
   return (
     <View style={styles.container}>
@@ -47,7 +47,7 @@ export default function HomeScreen() {
             <NotesList
               key={index}
               personality={item.personality}
-              create_at={item.createAt}
+              createAt={item.createAt}
               notesStatus={item.saveOrDrafts}
               description={item.description}
             />
@@ -55,7 +55,7 @@ export default function HomeScreen() {
         </ScrollView>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
   },
-})
+});
