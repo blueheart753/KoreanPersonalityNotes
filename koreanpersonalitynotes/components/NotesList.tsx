@@ -1,35 +1,33 @@
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
-} from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+} from '@react-navigation/native';
 
 interface Props {
-  personality: string
-  notesStatus: string
-  description: string
-  create_at: string
+  personality: string;
+  notesStatus: string;
+  description: string;
+  createAt: string;
 }
 
 const NotesList = ({
-  create_at,
+  createAt,
   notesStatus,
   personality,
   description,
 }: Props) => {
-  const isCompleted = notesStatus
-  const navigation = useNavigation<NavigationProp<ParamListBase>>()
+  const isCompleted = notesStatus;
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   const SendData = () => {
     navigation.navigate('LearnMoreView', {
       personality,
       description,
-      create_at,
-    })
-    // AsyncStorage.clear()
-  }
+      createAt,
+    });
+  };
 
   return (
     <TouchableOpacity
@@ -42,7 +40,7 @@ const NotesList = ({
     >
       <View style={styles.NoteListBox}>
         <Text style={styles.Personality}>{personality}</Text>
-        <Text style={styles.create_at}>{create_at}</Text>
+        <Text style={styles.create_at}>{createAt}</Text>
       </View>
       <View style={styles.NoteBox}>
         <Text style={styles.NotesStatus}>
@@ -58,8 +56,8 @@ const NotesList = ({
         />
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
@@ -115,6 +113,6 @@ const styles = StyleSheet.create({
     width: 14,
     height: 14,
   },
-})
+});
 
-export default NotesList
+export default NotesList;
