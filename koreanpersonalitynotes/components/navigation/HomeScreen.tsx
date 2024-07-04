@@ -1,5 +1,6 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Header from '@/components/Header';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import SearchBar from '@/components/SearchBar';
 import NotesList from '@/components/NotesList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -42,8 +43,9 @@ export default function HomeScreen() {
       <View style={styles.homeView}>
         <Header />
         <SearchBar />
-        <ScrollView style={styles.notesContainer}>
-          {items.map((item, index) => (
+        <SwipeListView
+          data={items}
+          renderItem={({ item, index }) => (
             <NotesList
               key={index}
               personality={item.personality}
@@ -51,8 +53,10 @@ export default function HomeScreen() {
               notesStatus={item.saveOrDrafts}
               description={item.description}
             />
-          ))}
-        </ScrollView>
+          )}
+          renderHiddenItem={() => null}
+          rightOpenValue={-75}
+        />
       </View>
     </View>
   );
