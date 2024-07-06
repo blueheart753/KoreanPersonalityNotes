@@ -1,9 +1,11 @@
+import React, { forwardRef } from 'react';
 import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
 } from '@react-navigation/native';
+import { SwipeListView } from 'react-native-swipe-list-view';
 
 interface Props {
   personality: string;
@@ -12,52 +14,50 @@ interface Props {
   createAt: string;
 }
 
-const NotesList = ({
-  createAt,
-  notesStatus,
-  personality,
-  description,
-}: Props) => {
-  const isCompleted = notesStatus;
-  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+const NotesList = forwardRef<any, Props>(
+  ({ createAt, notesStatus, personality, description }, ref) => {
+    const isCompleted = notesStatus;
+    const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
-  const SendData = () => {
-    navigation.navigate('LearnMoreView', {
-      personality,
-      description,
-      createAt,
-    });
-  };
+    const SendData = () => {
+      navigation.navigate('LearnMoreView', {
+        personality,
+        description,
+        createAt,
+      });
+    };
 
-  return (
-    <TouchableOpacity
-      style={
-        isCompleted == 'true'
-          ? styles.CompleteNoteListContainer
-          : styles.NotCompleteNoteListContainer
-      }
-      onPress={SendData}
-    >
-      <View style={styles.NoteListBox}>
-        <Text style={styles.Personality}>{personality}</Text>
-        <Text style={styles.create_at}>{createAt}</Text>
-      </View>
-      <View style={styles.NoteBox}>
-        <Text style={styles.NotesStatus}>
-          {isCompleted == 'true' ? '작성완료' : '작성중...'}
-        </Text>
-        <Image
-          style={styles.NoteImage}
-          source={
-            isCompleted == 'true'
-              ? require('@/assets/images/completeImage.png')
-              : require('@/assets/images/WritingImage.png')
-          }
-        />
-      </View>
-    </TouchableOpacity>
-  );
-};
+    return (
+      <TouchableOpacity
+        ref={ref}
+        style={
+          isCompleted === 'true'
+            ? styles.CompleteNoteListContainer
+            : styles.NotCompleteNoteListContainer
+        }
+        onPress={SendData}
+      >
+        <View style={styles.NoteListBox}>
+          <Text style={styles.Personality}>{personality}</Text>
+          <Text style={styles.create_at}>{createAt}</Text>
+        </View>
+        <View style={styles.NoteBox}>
+          <Text style={styles.NotesStatus}>
+            {isCompleted === 'true' ? '작성완료' : '작성중...'}
+          </Text>
+          <Image
+            style={styles.NoteImage}
+            source={
+              isCompleted === 'true'
+                ? require('@/assets/images/completeImage.png')
+                : require('@/assets/images/WritingImage.png')
+            }
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   CompleteNoteListContainer: {
