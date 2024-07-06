@@ -1,6 +1,5 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Header from '@/components/Header';
-import { SwipeListView } from 'react-native-swipe-list-view';
 import SearchBar from '@/components/SearchBar';
 import NotesList from '@/components/NotesList';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,7 +12,7 @@ interface Item {
   saveOrDrafts: string;
 }
 
-export default function HomeScreen() {
+const HomeScreen = () => {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -43,9 +42,8 @@ export default function HomeScreen() {
       <View style={styles.homeView}>
         <Header />
         <SearchBar />
-        <SwipeListView
-          data={items}
-          renderItem={({ item, index }) => (
+        <ScrollView style={styles.notesContainer}>
+          {items.map((item, index) => (
             <NotesList
               key={index}
               personality={item.personality}
@@ -53,14 +51,12 @@ export default function HomeScreen() {
               notesStatus={item.saveOrDrafts}
               description={item.description}
             />
-          )}
-          renderHiddenItem={() => null}
-          rightOpenValue={-75}
-        />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -80,3 +76,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+export default HomeScreen;
