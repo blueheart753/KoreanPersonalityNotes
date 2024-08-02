@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AllNotesButton from '../HomeButton';
 import WriteNote from '../WriteNote';
-import SaveButton from '../SaveButton';
 
 const SearchWrite = () => {
   const [personality, setPersonality] = useState<string>('');
