@@ -1,11 +1,11 @@
 import React, { forwardRef } from 'react';
-import { StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import {
   NavigationProp,
   ParamListBase,
   useNavigation,
 } from '@react-navigation/native';
-import { SwipeListView } from 'react-native-swipe-list-view';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props {
   personality: string;
@@ -27,6 +27,13 @@ const NotesList = forwardRef<any, Props>(
       });
     };
 
+    const renderIcon =
+      isCompleted === 'true' ? (
+        <Icon name="check-circle" size={17} color="#20d63b" />
+      ) : (
+        <Icon name="pencil" size={17} color="#fff" />
+      );
+
     return (
       <TouchableOpacity
         ref={ref}
@@ -45,14 +52,7 @@ const NotesList = forwardRef<any, Props>(
           <Text style={styles.NotesStatus}>
             {isCompleted === 'true' ? '작성완료' : '작성중...'}
           </Text>
-          <Image
-            style={styles.NoteImage}
-            source={
-              isCompleted === 'true'
-                ? require('@/assets/images/completeImage.png')
-                : require('@/assets/images/WritingImage.png')
-            }
-          />
+          {renderIcon}
         </View>
       </TouchableOpacity>
     );
@@ -108,10 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 4,
     alignItems: 'center',
-  },
-  NoteImage: {
-    width: 14,
-    height: 14,
   },
 });
 
