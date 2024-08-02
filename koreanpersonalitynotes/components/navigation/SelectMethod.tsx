@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text } from 'react-native'
-import AllNotesButton from '../HomeButton'
-import Choise from '../Choise'
+import { StyleSheet, View, Text } from 'react-native';
+import AllNotesButton from '../HomeButton';
+import Choise from '../Choise';
 const SelectMethod = () => {
   return (
     <View style={styles.SelectMethodContainer}>
@@ -16,15 +16,15 @@ const SelectMethod = () => {
           isRandom={true}
         />
         <Choise
-          keywordTitle="키워드를 검색하여 작성하기"
-          keywordDescrtion1="키워드를 검색해 해당 키워드를 찾습니다."
+          keywordTitle="키워드를 직접 작성하기"
+          keywordDescrtion1="키워드를 자신이 직접 작성합니다."
           keywordDescrtion2="키워드에 맞게 자신의 성격유형에 대한 이야기를 작성합니다."
           isRandom={false}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   SelectMethodContainer: {
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 24,
   },
-})
+});
 
-export default SelectMethod
+export default SelectMethod;
