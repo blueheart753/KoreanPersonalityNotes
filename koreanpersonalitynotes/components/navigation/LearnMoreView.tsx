@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 import AllNotesButton from '../HomeButton';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
@@ -22,7 +22,15 @@ const LearnMoreView = () => {
         <Text style={styles.createAt}>{createAt}</Text>
       </View>
       <View>
-        <Text style={styles.description}>{description}</Text>
+        <TextInput
+          style={styles.description}
+          textAlignVertical="top"
+          multiline={true}
+          returnKeyType="done"
+          blurOnSubmit={true}
+        >
+          {description}
+        </TextInput>
       </View>
     </View>
   );
@@ -52,6 +60,8 @@ const styles = StyleSheet.create({
   },
   description: {
     color: '#fff',
+    width: '100%',
+    height: '100%',
   },
 });
 
